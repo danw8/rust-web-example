@@ -1,0 +1,8 @@
+CREATE TABLE user (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	username VARCHAR(45) NOT NULL,
+	email VARCHAR(45) NOT NULL,
+	PRIMARY KEY (id),
+	UNIQUE INDEX `username_UNIQUE` (username ASC),
+	UNIQUE INDEX `email_UNIQUE` (email ASC)
+)

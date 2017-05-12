@@ -1,0 +1,16 @@
+Some notes on problems ()
+------------------------
+
+windows install: 
+
+%comspec% /K "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64
+
+cd C:\sqlite
+lib /def:sqlite3.def /out:sqlite3.lib
+
+information about getting things setup on windows https://cmsd2.silvrback.com/rust-msvc
+
+more info on sovling errors
+https://github.com/diesel-rs/diesel/issues/487
+
+copy over dll's from postgres

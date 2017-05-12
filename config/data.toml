@@ -1,0 +1,4 @@
+host = "localhost"
+username = ""
+password = ""
+schema = "rust_web_example"
