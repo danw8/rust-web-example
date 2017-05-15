@@ -1,7 +1,7 @@
 use diesel::prelude::*;
 use diesel::mysql::MysqlConnection;
 use r2d2::{ Pool, Config };
-use r2d2_diesel::ConnectionManager;
+use r2d2_diesel_mysql::ConnectionManager;
 use toml;
 
 use std::fs::File;
@@ -17,7 +17,6 @@ struct SqlConfig {
 }
 
 static CONFIG_PATH: &'static str = "config/data.toml";
-//static CONFIG_STRIGN: &'static str = get_db_url().unwrap().as_str();
 
 pub fn get_db_url() -> Result<String, String>  {
 	let config = load_data_config()?;
@@ -31,24 +30,20 @@ pub fn create_db_pool() -> Result<Pool<ConnectionManager<MysqlConnection>>, Stri
 
 	let pool_config = Config::default();
 	let manager = ConnectionManager::<MysqlConnection>::new(database_url.clone());
-	let pool = match Pool::new(pool_config, manager) {
+	match Pool::new(pool_config, manager) {
 		Ok(p) => Ok(p),
 		Err(_) => Err(format!("Error creating connection pool with connection string '{}'", database_url))
-	};
-	pool
+	}
 }
-
 
 /// A single connection to a mysql database
 pub fn establish_connection() -> Result<MysqlConnection, String> {
 	// Must be in <mysql://[[user]]:[[password]]@host[:port][/database]> form.
 	let database_url = get_db_url()?;
-
-	let connection = match MysqlConnection::establish(&database_url) {
+	match MysqlConnection::establish(&database_url) {
 		Ok(c) => Ok(c),
 		Err(_) => Err(format!("Error connecting to {}", database_url))
-	};
-	connection
+	}
 }
 
 /// Loading a config from

@@ -1,3 +1,7 @@
+These are just some notes on setup and problems. They can be ignored for the most part. 
+I plan on getting these setup into the readme once I get them organized. Then this file will be removed.
+
+
 Some notes on problems ()
 ------------------------
 
@@ -31,3 +35,17 @@ Fedora:
 
 	// use these to install mysql
 	https://dev.mysql.com/doc/refman/5.7/en/linux-installation-yum-repo.html
+
+
+
+
+git NOT tracking config changes
+-------------------------------
+
+// remove config from being tracked
+git update-index --skip-worktree .env
+git update-index --skip-worktree config/data.toml
+
+// add config to be tracked
+git update-index --no-skip-worktree .env
+git update-index --no-skip-worktree config/data.toml

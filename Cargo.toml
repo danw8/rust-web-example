@@ -14,4 +14,7 @@ toml = "0.4"
 serde = "*"
 serde_derive = "*"
 r2d2 = "*"
-r2d2-diesel = "*"
+#r2d2-diesel = "*"
+r2d2-diesel-mysql = { git = "https://github.com/Ameobea/r2d2-diesel" }
+dotenv = "*"
+lazy_static = "*"
