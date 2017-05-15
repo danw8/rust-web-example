@@ -1,7 +1,7 @@
 Some notes on problems ()
 ------------------------
 
-windows install: 
+windows install:
 
 %comspec% /K "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64
 
@@ -14,3 +14,20 @@ more info on sovling errors
 https://github.com/diesel-rs/diesel/issues/487
 
 copy over dll's from postgres
+
+
+
+Linux notes
+--------------------------------
+
+Fedora:
+   //Good
+   sudo dnf install community-mysql-server community-mysql-devel community-mysql-client
+   sudo dnf install postgresql-server postgresql-contrib postgresql-libs postgresql-devel
+   sudo dnf install sqlite sqlite-devel
+
+   // I had to make a link so that the linker could find this
+   sudo ln -s /usr/lib64/mysql/libmysqlclient.so /usr/lib/libmysqlclient.so
+
+	// use these to install mysql
+	https://dev.mysql.com/doc/refman/5.7/en/linux-installation-yum-repo.html

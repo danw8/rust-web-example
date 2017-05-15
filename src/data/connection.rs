@@ -1,5 +1,7 @@
 use diesel::prelude::*;
 use diesel::mysql::MysqlConnection;
+use r2d2::{ Pool, Config };
+use r2d2_diesel::ConnectionManager;
 use toml;
 
 use std::fs::File;
@@ -14,23 +16,60 @@ struct SqlConfig {
 	schema: String
 }
 
+static CONFIG_PATH: &'static str = "config/data.toml";
+//static CONFIG_STRIGN: &'static str = get_db_url().unwrap().as_str();
 
-pub fn establish_connection() -> MysqlConnection {
-
-	let config = load_data_config();
-	let database_url = format!("mysql://{}:{}@{}/{}", config.username, config.password, config.host, config.schema);
-	// Must be in <mysql://[[user]]:[[password]]@host[:port][/database]> form.
-	//let database_url = "mysql://root:7lx3ytm1@localhost/rust_web_example";
-	MysqlConnection::establish(&database_url)
-		.expect(&format!("Error connecting to {}", database_url))
+pub fn get_db_url() -> Result<String, String>  {
+	let config = load_data_config()?;
+	Ok(format!("mysql://{}:{}@{}/{}",
+		config.username, config.password, config.host, config.schema))
 }
 
-fn load_data_config() -> SqlConfig{
-	let file = File::open("config/data.toml").expect("Couldn't open config/data.toml");
+/// An r2d2 conneciton pool for use in routes.
+pub fn create_db_pool() -> Result<Pool<ConnectionManager<MysqlConnection>>, String> {
+	let database_url = get_db_url()?;
+
+	let pool_config = Config::default();
+	let manager = ConnectionManager::<MysqlConnection>::new(database_url.clone());
+	let pool = match Pool::new(pool_config, manager) {
+		Ok(p) => Ok(p),
+		Err(_) => Err(format!("Error creating connection pool with connection string '{}'", database_url))
+	};
+	pool
+}
+
+
+/// A single connection to a mysql database
+pub fn establish_connection() -> Result<MysqlConnection, String> {
+	// Must be in <mysql://[[user]]:[[password]]@host[:port][/database]> form.
+	let database_url = get_db_url()?;
+
+	let connection = match MysqlConnection::establish(&database_url) {
+		Ok(c) => Ok(c),
+		Err(_) => Err(format!("Error connecting to {}", database_url))
+	};
+	connection
+}
+
+/// Loading a config from
+fn load_data_config() -> Result<SqlConfig, String> {
+	let file = match File::open(CONFIG_PATH) {
+		Ok(f) => f,
+		Err(_) => return Err(format!("Couldn't open config file: {}", CONFIG_PATH))
+	};
+
 	let mut buf_reader = BufReader::new(file);
 	let mut contents = String::new();
-	buf_reader.read_to_string(&mut contents).expect("Couldn't read the file config/data.toml");
+	match buf_reader.read_to_string(&mut contents) {
+		Ok(_) => {},
+		Err(_) => return Err(format!("Couldn't read the config file: {}", CONFIG_PATH))
+	};
 
-	let config : SqlConfig = toml::from_str(&contents).expect("Couldn't deserialize config/data.toml");
-	return config;
+	let config : SqlConfig = match toml::from_str(&contents){
+		Ok(c) => c,
+		Err(_) => return Err(format!("Couldn't deserialize config file: {}", CONFIG_PATH))
+	};
+	Ok(config)
 }
+
+
