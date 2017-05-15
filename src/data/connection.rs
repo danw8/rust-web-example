@@ -1,4 +1,3 @@
-use diesel::prelude::*;
 use diesel::mysql::MysqlConnection;
 use r2d2::{ Pool, Config };
 use r2d2_diesel_mysql::ConnectionManager;
@@ -37,14 +36,14 @@ pub fn create_db_pool() -> Result<Pool<ConnectionManager<MysqlConnection>>, Stri
 }
 
 /// A single connection to a mysql database
-pub fn establish_connection() -> Result<MysqlConnection, String> {
-	// Must be in <mysql://[[user]]:[[password]]@host[:port][/database]> form.
-	let database_url = get_db_url()?;
-	match MysqlConnection::establish(&database_url) {
-		Ok(c) => Ok(c),
-		Err(_) => Err(format!("Error connecting to {}", database_url))
-	}
-}
+// pub fn establish_connection() -> Result<MysqlConnection, String> {
+// 	// Must be in <mysql://[[user]]:[[password]]@host[:port][/database]> form.
+// 	let database_url = get_db_url()?;
+// 	match MysqlConnection::establish(&database_url) {
+// 		Ok(c) => Ok(c),
+// 		Err(_) => Err(format!("Error connecting to {}", database_url))
+// 	}
+// }
 
 /// Loading a config from
 fn load_data_config() -> Result<SqlConfig, String> {

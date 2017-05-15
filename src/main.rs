@@ -18,13 +18,7 @@ mod route;
 mod data;
 
 use route::*;
-use data::connection::*;
-
 
 fn main() {
-	let connection = match establish_connection(){
-		Ok(c) => c,
-		Err(e) => panic!(e)
-	};
 	rocket::ignite().mount("/", routes![index, users, files]).launch();
 }

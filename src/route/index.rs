@@ -32,9 +32,22 @@ fn users(db: Database) -> Markup {
 				"Users in the system"
 			}
 			ul {
+				div {
+					span.user.header {
+						"Username"
+					}
+					spane.user.header {
+						"Email"
+					}
+				}
 				@for u in users {
 					li {
-						(u.username) (u.email)
+						span.user {
+							(u.username)
+						} 
+						span.user {
+							(u.email)
+						}
 					}
 				}
 			}
