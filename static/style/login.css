@@ -1,0 +1,54 @@
+body {
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	height: 100%;
+}
+
+.login-form{
+	width: 40%;
+	border: 2px solid darkgreen;
+	width: 500px;
+	min-width: 300px;
+}
+
+.login-header{
+	color: white;
+	background-color: darkgreen;
+	margin-top: 0px;
+	padding: 20px;
+}
+
+.login-body{
+	color: darkgreen;
+	margin: 25px;
+}
+
+.login-field{
+	margin: 25px 0px;
+	display: flex;
+	align-content: center;
+	min-width: 300px;
+	flex-wrap: wrap;
+}
+
+.login-field label {
+	width: 150px;
+}
+
+.login-field input {
+	width: 250px;
+}
+
+.login-button{
+
+}
+
+@media (max-width: 600px) {
+	.login-form{
+		width:90%;
+		left: 0px;
+		right: 0px;
+	}
+}

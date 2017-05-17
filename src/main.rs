@@ -1,4 +1,4 @@
-#![feature(plugin)]
+#![feature(plugin, custom_derive, custom_attribute)]
 #![plugin(maud_macros)]
 #![plugin(rocket_codegen)]
 
@@ -20,5 +20,5 @@ mod data;
 use route::*;
 
 fn main() {
-	rocket::ignite().mount("/", routes![index, users, files]).launch();
+	rocket::ignite().mount("/", routes![index, users, files, login, verify]).launch();
 }
