@@ -11,7 +11,7 @@ lazy_static! {
 	pub static ref DB_POOL: Pool<ConnectionManager<MysqlConnection>> = create_db_pool().unwrap();
 }
 
-pub struct Database(PooledConnection<ConnectionManager<MysqlConnection>>);
+pub struct Database(pub PooledConnection<ConnectionManager<MysqlConnection>>);
 
 impl Database {
 	pub fn connection(&self) -> &MysqlConnection {

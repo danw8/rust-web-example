@@ -14,7 +14,7 @@ fn login() -> Markup {
 		}
 		body{
 			form.login-form action="/verify" method="post" accept-charset="utf-8"{
-				H1.login-header {
+				h1.login-header {
 					"Login"
 				}
 				div.login-body {
@@ -24,7 +24,7 @@ fn login() -> Markup {
 					}
 					div.login-field {
 						label for="password" { "Password" }
-						input id="password" name="password" type="text" /
+						input id="password" name="password" type="password" /
 					}
 					button.login-button id="submit" type="submit" { "Login" }
 				}
