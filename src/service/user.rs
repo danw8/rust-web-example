@@ -51,4 +51,16 @@ impl UserService{
 
         	self.get_user(username)
 	}
+
+	pub fn authenticate(&self, username: &str, password: &str) -> bool {
+		let user = self.get_user(username);
+		if user.is_some() {
+			let user = user.unwrap();
+			return match verify(password, &user.password){
+				Ok(valid) => valid,
+				Err(_) => false
+			};
+		}
+		false
+	}
 }

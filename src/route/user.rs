@@ -1,7 +1,4 @@
-use diesel::prelude::*;
 use maud::Markup;
-use data::database::Database;
-use data::model::user::User;
 use service::user::UserService;
 use rocket::request::Form;
 use rocket::response::Redirect;

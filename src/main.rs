@@ -22,5 +22,5 @@ mod service;
 use route::*;
 
 fn main() {
-	rocket::ignite().mount("/", routes![index, users, files, login, verify, adduser]).launch();
+	rocket::ignite().mount("/", routes![index, users, files, login, verify, adduser, member]).launch();
 }

@@ -1,18 +1,15 @@
 use maud::Markup;
 
-
-
-#[get("/")]
-fn index() -> Markup {
+#[get("/member")]
+fn member() -> Markup {
 	html! {
 		head{
 			link rel="stylesheet" type="text/css" href=("files/style/index.css") /
 		}
 		body{
 			h1 {
-				"Hello, World"
+				"Welcome, Member"
 			}
 		}
 	}
 }
-

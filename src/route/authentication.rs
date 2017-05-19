@@ -1,13 +1,12 @@
-use diesel::prelude::*;
 use maud::Markup;
-use data::database::Database;
-use data::model::user::User;
-use rocket::request::Form;
-use rocket::response::Redirect;
+use rocket::request:: Form;
+use rocket::response::{Flash, Redirect};
 use rocket::http::{Cookie, Cookies};
+use service::user::UserService;
+use rocket::request::FlashMessage;
 
 #[get("/login")]
-fn login() -> Markup {
+fn login(flash: Option<FlashMessage>) -> Markup {
 	html! {
 		head{
 			link rel="stylesheet" type="text/css" href=("files/style/login.css") /
@@ -18,6 +17,11 @@ fn login() -> Markup {
 					"Login"
 				}
 				div.login-body {
+					@if flash.is_some() {
+						p.error {
+								(flash.unwrap().msg())
+						}
+					}
 					div.login-field{
 						label for="username"{ "Username" }
 						input id="username" name="username" type="text" /
@@ -40,12 +44,14 @@ struct Credentials {
 }
 
 #[post("/verify", data = "<creds>")]
-fn verify(cookies: &Cookies, creds: Form<Credentials>) -> Redirect {
-	//Check if creds are valid
+fn verify(cookies: &Cookies, user_service: UserService, creds: Form<Credentials>) -> Result<Redirect, Flash<Redirect>> {
+	let creds = creds.into_inner();
+	let verified = user_service.authenticate(&creds.username, &creds.password);
 
-	// add the cookie
-	cookies.add(Cookie::new("verified", creds.into_inner().username ));
-
-	//redirect to memeber area
-	Redirect::to("/")
+	if verified {
+		cookies.add(Cookie::new("verified", creds.username ));
+		//redirect to memeber area
+		return Ok(Redirect::to("/member"));
+	}
+	Err(Flash::error(Redirect::to("/login"), "Invalid username or password"))
 }
