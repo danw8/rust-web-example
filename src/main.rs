@@ -14,6 +14,7 @@ extern crate r2d2;
 extern crate r2d2_diesel_mysql;
 extern crate dotenv;
 extern crate bcrypt;
+extern crate time;
 
 mod route;
 mod data;

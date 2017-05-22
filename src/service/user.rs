@@ -1,7 +1,7 @@
 use r2d2::{ GetTimeout };
 use rocket::request::{Outcome, FromRequest};
 use rocket::Outcome::{Success, Failure};
-use rocket::http::Status;
+use rocket::http::{Cookie, Cookies, Status};
 use rocket::Request;
 use diesel;
 use diesel::prelude::*;
@@ -10,9 +10,11 @@ use data::database::*;
 use data::model::user::{User, NewUser};
 use data::schema::user;
 use bcrypt::{DEFAULT_COST, hash, verify};
+use time;
 
 pub struct UserService{
 	pub db: Database,
+	pub user: Option<User>,
 }
 
 impl<'a, 'r> FromRequest<'a, 'r> for UserService {
@@ -21,6 +23,7 @@ impl<'a, 'r> FromRequest<'a, 'r> for UserService {
 		match DB_POOL.get() {
 			Ok(db_connection) => Success(UserService {
 				db: Database(db_connection),
+				user: None
 			}),
 			Err(e) => Failure((Status::InternalServerError, e)),
 		}
@@ -52,15 +55,27 @@ impl UserService{
         	self.get_user(username)
 	}
 
-	pub fn authenticate(&self, username: &str, password: &str) -> bool {
+	pub fn authenticate(&mut self, username: &str, password: &str) -> bool {
 		let user = self.get_user(username);
-		if user.is_some() {
-			let user = user.unwrap();
-			return match verify(password, &user.password){
-				Ok(valid) => valid,
+		if let Some(u) = user {
+			return match verify(password, &u.password){
+				Ok(valid) => {
+					self.user = Some(u);
+					valid
+				},
 				Err(_) => false
 			};
 		}
 		false
+	}
+
+	pub fn auth_with_cookie(&mut self, cookies: &Cookies) -> bool{
+		println!("Authorizing with cookie");
+		let verified_cookie = match cookies.find("verified"){
+			Some(c) => c,
+			None => return false
+		};
+		self.user = self.get_user(verified_cookie.value());
+		self.user.is_some()
 	}
 }

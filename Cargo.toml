@@ -19,3 +19,4 @@ r2d2-diesel-mysql = { git = "https://github.com/Ameobea/r2d2-diesel" }
 dotenv = "*"
 lazy_static = "*"
 bcrypt = "0.1"
+time ="*"

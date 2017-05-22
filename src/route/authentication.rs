@@ -4,6 +4,7 @@ use rocket::response::{Flash, Redirect};
 use rocket::http::{Cookie, Cookies};
 use service::user::UserService;
 use rocket::request::FlashMessage;
+use time;
 
 #[get("/login")]
 fn login(flash: Option<FlashMessage>) -> Markup {
@@ -44,13 +45,20 @@ struct Credentials {
 }
 
 #[post("/verify", data = "<creds>")]
-fn verify(cookies: &Cookies, user_service: UserService, creds: Form<Credentials>) -> Result<Redirect, Flash<Redirect>> {
+fn verify(cookies: &Cookies, mut user_service: UserService, creds: Form<Credentials>) -> Result<Redirect, Flash<Redirect>> {
 	let creds = creds.into_inner();
 	let verified = user_service.authenticate(&creds.username, &creds.password);
 
 	if verified {
-		cookies.add(Cookie::new("verified", creds.username ));
-		//redirect to memeber area
+		let expire_time = time::now() + time::Duration::minutes(30);
+		let cookie = Cookie::build("verified", creds.username)
+			.domain("localhost")
+			.path("/")
+			.secure(true)
+			//.http_only(true)
+			.expires(expire_time)
+			.finish();
+		cookies.add(cookie);
 		return Ok(Redirect::to("/member"));
 	}
 	Err(Flash::error(Redirect::to("/login"), "Invalid username or password"))
