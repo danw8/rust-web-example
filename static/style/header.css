@@ -1,0 +1,38 @@
+header {
+	color: white;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: darkgreen;
+	margin-bottom: 20px;
+}
+
+header h1 {
+	margin: 20px;
+}
+
+header h1 a {
+	text-decoration: none;
+	color: white;
+}
+
+header ul {
+	margin: 20px;
+	font-size: large;
+	list-style: none;
+	display: flex;
+}
+
+header ul li {
+	margin: 0px 10px;
+}
+
+header ul li a {
+	text-decoration: none;
+	color: white;
+}
+
+header ul li a:hover{
+	color:pink;
+}

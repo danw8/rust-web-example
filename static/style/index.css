@@ -1,12 +1,1 @@
-body{
-	color: green;
-}
-
-.user{
-	display: inline-block;
-	width: 250px;
-}
-
-.user.header{
-	font-weight: bold;
-}
+@import "main.css";
