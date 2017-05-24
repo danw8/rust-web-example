@@ -19,9 +19,11 @@ extern crate time;
 mod route;
 mod data;
 mod service;
+mod view;
 
 use route::*;
 
+
 fn main() {
-	rocket::ignite().mount("/", routes![index, users, files, login, verify, adduser, member]).launch();
+	rocket::ignite().mount("/", routes![index, users, files, login, verify, adduser, member, logout]).launch();
 }

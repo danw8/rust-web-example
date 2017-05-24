@@ -70,7 +70,6 @@ impl UserService{
 	}
 
 	pub fn auth_with_cookie(&mut self, cookies: &Cookies) -> bool{
-		println!("Authorizing with cookie");
 		let verified_cookie = match cookies.find("verified"){
 			Some(c) => c,
 			None => return false

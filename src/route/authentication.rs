@@ -38,6 +38,12 @@ fn login(flash: Option<FlashMessage>) -> Markup {
 	}
 }
 
+#[get("/logout")]
+pub fn logout(cookies: &Cookies) -> Redirect {
+	cookies.remove("verified");
+	Redirect::to("/")
+}
+
 #[derive(FromForm)]
 struct Credentials {
     username: String,
@@ -54,8 +60,8 @@ fn verify(cookies: &Cookies, mut user_service: UserService, creds: Form<Credenti
 		let cookie = Cookie::build("verified", creds.username)
 			.domain("localhost")
 			.path("/")
-			.secure(true)
-			//.http_only(true)
+			//.secure(true)
+			.http_only(true)
 			.expires(expire_time)
 			.finish();
 		cookies.add(cookie);
