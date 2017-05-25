@@ -1,11 +1,9 @@
-use maud::{Markup, PreEscaped};
-use rocket::http::{Cookie, Cookies};
+use maud::{Markup};
 use service::user::UserService;
 use view;
 
 #[get("/")]
-fn index(cookies: &Cookies, mut user_service: UserService) -> Markup {
-	user_service.auth_with_cookie(cookies);
+fn index(user_service: UserService) -> Markup {
 	view::index::index(user_service.user)
 }
 

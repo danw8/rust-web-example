@@ -19,14 +19,17 @@ pub struct UserService{
 
 impl<'a, 'r> FromRequest<'a, 'r> for UserService {
 	type Error = GetTimeout;
-	fn from_request(_: &'a Request<'r>) -> Outcome<Self, Self::Error> {
-		match DB_POOL.get() {
-			Ok(db_connection) => Success(UserService {
+	fn from_request(request: &'a Request<'r>) -> Outcome<Self, Self::Error> {
+		//request.cookies()
+		let mut service = match DB_POOL.get() {
+			Ok(db_connection) => UserService {
 				db: Database(db_connection),
 				user: None
-			}),
-			Err(e) => Failure((Status::InternalServerError, e)),
-		}
+			},
+			Err(e) => return Failure((Status::InternalServerError, e)),
+		};
+		service.auth_with_cookie(request.cookies());
+		Success(service)
 	}
 }
 

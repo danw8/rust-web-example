@@ -15,7 +15,7 @@ fn login(user_service: UserService, flash: Option<FlashMessage>) -> Markup {
 			link rel="stylesheet" type="text/css" href=("files/style/login.css") /
 		}
 		body{
-			(navbar(user_service.user))
+			(navbar(&user_service.user))
 			div.login{
 				form.login-form action="/verify" method="post" accept-charset="utf-8"{
 					h1.login-header {

@@ -1,7 +1,7 @@
 use maud::Markup;
 use data::model::user::User;
 
-pub fn navbar(user: Option<User>) -> Markup{
+pub fn navbar(user: &Option<User>) -> Markup{
     html!{
         header {
             h1 {
@@ -10,9 +10,9 @@ pub fn navbar(user: Option<User>) -> Markup{
                 }
             }
             ul {
-                @if user.is_some() {
+                @if let &Some(ref u) = user {
                     li {
-                        "Hi " (user.unwrap().username) "."
+                        "Hi " (u.username) "."
                     }
                     li {
                         a href="/logout" {

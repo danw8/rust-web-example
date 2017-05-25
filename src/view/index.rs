@@ -8,7 +8,7 @@ pub fn index(user: Option<User>) -> Markup {
 			link rel="stylesheet" type="text/css" href=("files/style/index.css") /
 		}
 		body{
-			(navbar(user))
+			(navbar(&user))
 			h1 {
 				"Hello, World"
 			}

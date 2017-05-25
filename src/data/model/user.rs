@@ -1,6 +1,6 @@
 use super::super::schema::user;
 
-#[derive(Queryable, Deserialize, Serialize)]
+#[derive(Queryable, Deserialize, Serialize, Clone)]
 pub struct User {
 	pub id: i32,
 	pub username: String,
