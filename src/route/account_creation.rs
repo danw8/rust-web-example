@@ -3,8 +3,8 @@ use service::user::UserService;
 use rocket::request::Form;
 use rocket::response::Redirect;
 
-#[get("/users")]
-fn users(user_service: UserService) -> Markup {
+#[get("/account_creation")]
+fn account_creation(user_service: UserService) -> Markup {
 	let users = user_service.get_users();
 	html! {
 		head{

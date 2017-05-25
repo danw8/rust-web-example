@@ -25,5 +25,5 @@ use route::*;
 
 
 fn main() {
-	rocket::ignite().mount("/", routes![index, users, files, login, verify, adduser, member, logout]).launch();
+	rocket::ignite().mount("/", routes![index, account_creation, files, login, verify, adduser, member, logout]).launch();
 }

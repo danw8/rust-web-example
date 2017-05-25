@@ -1,7 +1,7 @@
 use r2d2::{ GetTimeout };
 use rocket::request::{Outcome, FromRequest};
 use rocket::Outcome::{Success, Failure};
-use rocket::http::{Cookie, Cookies, Status};
+use rocket::http::{Cookies, Status};
 use rocket::Request;
 use diesel;
 use diesel::prelude::*;
@@ -10,7 +10,7 @@ use data::database::*;
 use data::model::user::{User, NewUser};
 use data::schema::user;
 use bcrypt::{DEFAULT_COST, hash, verify};
-use time;
+//use time;
 
 pub struct UserService{
 	pub db: Database,
@@ -20,7 +20,6 @@ pub struct UserService{
 impl<'a, 'r> FromRequest<'a, 'r> for UserService {
 	type Error = GetTimeout;
 	fn from_request(request: &'a Request<'r>) -> Outcome<Self, Self::Error> {
-		//request.cookies()
 		let mut service = match DB_POOL.get() {
 			Ok(db_connection) => UserService {
 				db: Database(db_connection),

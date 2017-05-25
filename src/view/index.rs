@@ -9,9 +9,12 @@ pub fn index(user: Option<User>) -> Markup {
 		}
 		body{
 			(navbar(&user))
-			h1 {
-				"Hello, World"
+			div.wrapper {
+				h1 {
+					"Hello, World"
+				}
 			}
+
 		}
 	}
 }
