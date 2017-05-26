@@ -1,0 +1,23 @@
+@import "main.css";
+
+.center{
+    display: flex;
+    justify-content: center;
+}
+.create div {
+    display: flex;
+}
+
+.create p{
+    color: pink;
+}
+
+.create label{
+    width: 200px;
+    margin-bottom: 25px;
+}
+
+.create input{
+    width: 300px;
+    margin-bottom: 25px;
+}

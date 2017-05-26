@@ -41,8 +41,14 @@ impl UserService{
 		user::table.filter(user::username.eq(uname)).limit(1).load::<User>(self.db.connection()).expect("Error loading user").pop()
 	}
 
-	pub fn create_user<'a>(&self, username: &'a str, email: &'a str, password: &'a str) -> Option<User> {
-		let password_hash = hash(password, DEFAULT_COST).expect("Could not hash password");
+	pub fn create_user<'a>(&self, username: &'a str, email: &'a str, password: &'a str) -> Result<User, String> {
+		let password_hash = match hash(password, DEFAULT_COST) {
+			Ok(p) => p,
+			Err(e) => {
+				println!("Password Invalid: {}", e); // Should do some loging here
+				return Err("Password Invalid".to_string());
+			},
+		};
 
 		let new_user = NewUser {
 			username: username,
@@ -50,11 +56,20 @@ impl UserService{
 			password: password_hash.as_str(),
 		};
 
-		diesel::insert(&new_user).into(user::table)
-        		.execute(self.db.connection())
-        		.expect("Error saving new post");
+		match diesel::insert(&new_user).into(user::table)
+        		.execute(self.db.connection()) {
+			Ok(_) => (),
+			Err(e) => {
+				println!("Saving to database failed: {}", e);
+				return Err("Failed to create user.".to_string());
+			},
+		}
 
-        	self.get_user(username)
+        if let Some(u) = self.get_user(username) {
+			return Ok(u);
+		}
+		println!("Created user does not exist");
+		Err("Failed to create user.".to_string())
 	}
 
 	pub fn authenticate(&mut self, username: &str, password: &str) -> bool {

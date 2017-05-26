@@ -22,9 +22,9 @@ fn login(user_service: UserService, flash: Option<FlashMessage>) -> Markup {
 						"Login"
 					}
 					div.login-body {
-						@if flash.is_some() {
+						@if let Some(f) = flash {
 							p.error {
-									(flash.unwrap().msg())
+									(f.msg())
 							}
 						}
 						div.login-field{

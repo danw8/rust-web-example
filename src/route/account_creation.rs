@@ -1,59 +1,13 @@
 use maud::Markup;
 use service::user::UserService;
 use rocket::request::Form;
-use rocket::response::Redirect;
+use rocket::request::FlashMessage;
+use rocket::response::{Flash, Redirect};
+use view;
 
 #[get("/account_creation")]
-fn account_creation(user_service: UserService) -> Markup {
-	let users = user_service.get_users();
-	html! {
-		head{
-			link rel="stylesheet" type="text/css" href=("files/style/index.css") /
-		}
-		body{
-			h1 {
-				"Users in the system"
-			}
-			h3 {
-				"Add User"
-			}
-			form action="/adduser" method="post" accept-charset="utf-8"{
-				div{
-					label for="username"{ "Username" }
-					input id="username" name="username" type="text" /
-				}
-				div {
-					label for="email" { "Email" }
-					input id="email" name="email" type="text" /
-				}
-				div {
-					label for="password" { "Password" }
-					input id="password" name="password" type="password" /
-				}
-				button id="submit" type="submit" { "Create" }
-			}
-			ul {
-				div {
-					span.user.header {
-						"Username"
-					}
-					spane.user.header {
-						"Email"
-					}
-				}
-				@for u in users {
-					li {
-						span.user {
-							(u.username)
-						}
-						span.user {
-							(u.email)
-						}
-					}
-				}
-			}
-		}
-	}
+fn account_creation(user_service: UserService, flash: Option<FlashMessage>) -> Markup {
+	view::account_creation::account_creation(user_service.user, flash)
 }
 
 #[derive(FromForm)]
@@ -61,11 +15,17 @@ struct AddUser {
     username: String,
     email: String,
     password: String,
+	confirm: String,
 }
 
 #[post("/adduser", data = "<add_user>")]
-fn adduser(user_service: UserService, add_user: Form<AddUser>) -> Redirect {
+fn adduser(user_service: UserService, add_user: Form<AddUser>) -> Result<Redirect, Flash<Redirect>> {
 	let user = add_user.into_inner();
-	user_service.create_user(&user.username, &user.email, &user.password).expect("Couldn't create user.");
-	Redirect::to("/users")
+	if user.password != user.confirm {
+		return Err(Flash::error(Redirect::to("/account_creation"), "Passwords did not match"));
+	}
+	match user_service.create_user(&user.username, &user.email, &user.password){
+		Ok(_) => return Ok(Redirect::to("/login")),
+		Err(e) => Err(Flash::error(Redirect::to("/account_creation"), e))
+	}
 }
