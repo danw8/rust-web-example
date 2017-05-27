@@ -38,6 +38,10 @@ pub fn account_creation(user: Option<User>, flash: Option<FlashMessage>) -> Mark
 							input id="confirm" name="confirm" type="password" /
 						}
 						button id="submit" type="submit" { "Create" }
+						"Have an account?"
+						a href="/login" {
+							"Login"
+						}
 					}
 				}
 			}

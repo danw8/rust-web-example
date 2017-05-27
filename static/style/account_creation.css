@@ -4,20 +4,34 @@
     display: flex;
     justify-content: center;
 }
+
+.create{
+    padding: 25px;
+}
+
 .create div {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .create p{
-    color: pink;
+    color: var(--red-light);
 }
 
 .create label{
-    width: 200px;
+    width: 175px;
     margin-bottom: 25px;
 }
 
 .create input{
-    width: 300px;
+    width: 250px;
     margin-bottom: 25px;
+}
+
+.create button{
+    margin-right: 25px;
+}
+
+.create a{
+    margin-left: 10px;
 }

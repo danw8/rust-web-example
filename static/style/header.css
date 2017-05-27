@@ -1,12 +1,16 @@
+@import url("colors.css");
+
 header {
 	color: white;
 	width: 100%;
+	background-color: var(--green-primary);
 	display: flex;
+	justify-content: center;
+}
+
+header .wrapper{
+	width: 100%;
 	justify-content: space-between;
-	align-items: center;
-	background-color: darkgreen;
-	margin-bottom: 20px;
-	flex-wrap: wrap;
 }
 
 header h1 {
@@ -35,5 +39,5 @@ header ul li a {
 }
 
 header ul li a:hover{
-	color:pink;
+	color:var(--red-light);
 }

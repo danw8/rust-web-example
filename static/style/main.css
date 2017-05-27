@@ -1,7 +1,36 @@
 @import "header.css";
 
 body{
-	color: green;
+	color: var(--green-primary);
 	font-family: Helvetica, Arial, sans-serif;
 	margin: 0px;
+	font-size: large;
+}
+
+a{
+	text-decoration: none;
+	color: var(--blue-light);
+}
+
+.container{
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.wrapper{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	max-width: 1400px;
+	width: 100%;
+}
+
+.margin-md{
+	margin: 20px;
+}
+
+.one-hundred{
+	width: 100%;
 }

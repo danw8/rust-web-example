@@ -6,41 +6,11 @@ use service::user::UserService;
 use rocket::request::FlashMessage;
 use time;
 
-use view::partial::*;
+use view;
 
 #[get("/login")]
 fn login(user_service: UserService, flash: Option<FlashMessage>) -> Markup {
-	html! {
-		head{
-			link rel="stylesheet" type="text/css" href=("files/style/login.css") /
-		}
-		body{
-			(navbar(&user_service.user))
-			div.login{
-				form.login-form action="/verify" method="post" accept-charset="utf-8"{
-					h1.login-header {
-						"Login"
-					}
-					div.login-body {
-						@if let Some(f) = flash {
-							p.error {
-									(f.msg())
-							}
-						}
-						div.login-field{
-							label for="username"{ "Username" }
-							input id="username" name="username" type="text" /
-						}
-						div.login-field {
-							label for="password" { "Password" }
-							input id="password" name="password" type="password" /
-						}
-						button.login-button id="submit" type="submit" { "Login" }
-					}
-				}
-			}
-		}
-	}
+	view::login::login(user_service.user, flash)
 }
 
 #[get("/logout")]

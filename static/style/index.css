@@ -1,5 +1,39 @@
 @import "main.css";
 
-.wrapper {
+/*.wrapper {
 	margin: 20px;
+}*/
+
+.center {
+	display: flex;
+    justify-content: center;
+}
+
+.account_choice{
+	display: flex;
+	flex-wrap: wrap;
+	padding: 25px;
+}
+
+.account_choice a {
+	font-size: large;
+}
+
+.border_right {
+	border-right-style: solid;
+	border-right-color: var(--green-primary);
+	border-right-width: 4px;
+	padding-right: 25px;
+	height: 125px;
+}
+
+.account_choice div {
+	min-width: 150px;
+	margin-left: 25px;
+}
+
+@media screen and (max-width: 750px){
+	.border_right{
+		border-right: none;
+	}
 }
