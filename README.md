@@ -13,6 +13,7 @@ This is a example web application written in rust. It will try to include common
 - [ ] XML Request/Response
 - [ ] Update DOM
 - [ ] Authentication
+- [ ] Unit Tests
 - [ ] Others
 
 This may not be a complete list but gives an idea of what this repository is about.

@@ -1,3 +1,4 @@
 target/
 **/*.rs.bk
 Cargo.lock
+static/script/app/app.js
