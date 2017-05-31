@@ -11,15 +11,24 @@ fn main() {
     let document = webplatform::init();
     let document = Arc::new(document);
 
+    let loc_hash = document.location_hash_get();
+
     let app = document.element_query("#app").unwrap();
-    let PreEscaped(markup) = member();
+    let PreEscaped(markup) = member(loc_hash);
     app.html_set(&markup);
+
+   document.on("hashchange",|_| webplatform::alert("WITNESS ME"));
     
     webplatform::spin();
 }
 
-fn member() -> Markup{
+fn member(hash: String) -> Markup{
     html!{
-        "Hello, Emscripten!!!!"
+        h1 {
+            "Hello, Emscripten!!!!"
+        }
+        h3 {
+            "Got here by " (hash)
+        }
     }
 }

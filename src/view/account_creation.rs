@@ -6,7 +6,7 @@ use rocket::request::FlashMessage;
 pub fn account_creation(user: Option<User>, flash: Option<FlashMessage>) -> Markup {
 	html!{
 		head{
-			link rel="stylesheet" type="text/css" href=("files/style/account_creation.css") /
+			link rel="stylesheet" type="text/css" href=("/files/style/account_creation.css") /
 		}
 		body{
 			(navbar::navbar(&user))

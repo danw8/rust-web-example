@@ -6,7 +6,7 @@ use rocket::request::FlashMessage;
 pub fn login(user: Option<User>, flash: Option<FlashMessage>) -> Markup {
 	html!{
 		head{
-			link rel="stylesheet" type="text/css" href=("files/style/login.css") /
+			link rel="stylesheet" type="text/css" href=("/files/style/login.css") /
 		}
 		body{
 			(navbar::navbar(&user))

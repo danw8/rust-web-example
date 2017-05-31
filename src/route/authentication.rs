@@ -40,7 +40,7 @@ fn verify(cookies: &Cookies, mut user_service: UserService, creds: Form<Credenti
 			.expires(expire_time)
 			.finish();
 		cookies.add(cookie);
-		return Ok(Redirect::to("/member"));
+		return Ok(Redirect::to("/member#"));
 	}
 	Err(Flash::error(Redirect::to("/login"), "Invalid username or password"))
 }

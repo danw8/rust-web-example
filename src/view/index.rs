@@ -5,7 +5,7 @@ use super::partial::*;
 pub fn index(user: Option<User>) -> Markup {
 	html! {
 		head{
-			link rel="stylesheet" type="text/css" href=("files/style/index.css") /
+			link rel="stylesheet" type="text/css" href=("/files/style/index.css") /
 		}
 		body{
 			(navbar(&user))
@@ -38,7 +38,7 @@ pub fn index(user: Option<User>) -> Markup {
 									"Have an account?"
 								}
 								@if user.is_some() {
-									a href="/member" { "Go to the member area" }
+									a href="/member#" { "Go to the member area" }
 								}
 								@else{
 									a href="/login" { "Login" }
