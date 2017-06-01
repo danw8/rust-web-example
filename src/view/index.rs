@@ -38,7 +38,7 @@ pub fn index(user: Option<User>) -> Markup {
 									"Have an account?"
 								}
 								@if user.is_some() {
-									a href="/member#" { "Go to the member area" }
+									a href="/member#/" { "Go to the member area" }
 								}
 								@else{
 									a href="/login" { "Login" }
