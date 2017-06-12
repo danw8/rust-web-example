@@ -6,8 +6,8 @@ authors = ["Daniel Wilkins <daniel.wilkins@centeva.com>"]
 [dependencies]
 maud = { version = "*", features = ["rocket"] }
 maud_macros = "*"
-rocket = "0.2.6"
-rocket_codegen = "0.2.6"
+rocket = "*"
+rocket_codegen = "*"
 diesel = { version = "0.12.0", features = ["mysql"] }
 diesel_codegen = { version ="0.12.0", features = ["mysql"] }
 toml = "0.4"

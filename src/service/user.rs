@@ -33,9 +33,9 @@ impl<'a, 'r> FromRequest<'a, 'r> for UserService {
 }
 
 impl UserService{
-	pub fn get_users(&self) -> Vec<User> {
-		user::table.load::<User>(self.db.connection()).expect("Error loading users")
-	}
+	// pub fn get_users(&self) -> Vec<User> {
+	// 	user::table.load::<User>(self.db.connection()).expect("Error loading users")
+	// }
 
 	pub fn get_user(&self, uname: &str) -> Option<User> {
 		user::table.filter(user::username.eq(uname)).limit(1).load::<User>(self.db.connection()).expect("Error loading user").pop()

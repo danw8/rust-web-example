@@ -1,5 +1,5 @@
 use data::model::user::User;
-use maud::{Markup, PreEscaped};
+use maud::{Markup};
 use super::partial::*;
 
 pub fn member(user: Option<User>) -> Markup {
