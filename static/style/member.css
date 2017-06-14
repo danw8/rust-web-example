@@ -1,1 +1,14 @@
 @import "main.css";
+
+
+.center {
+	display: flex;
+    justify-content: center;
+}
+
+.list-container, .member-container{
+	display: flex;
+	flex-wrap: wrap;
+    flex-grow: 1;
+	padding: 25px;
+}
