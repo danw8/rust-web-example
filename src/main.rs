@@ -5,6 +5,7 @@
 
 #[macro_use] extern crate diesel;
 #[macro_use] extern crate diesel_codegen;
+#[macro_use] extern crate rocket_contrib;
 #[macro_use] extern crate serde_derive;
 #[macro_use] extern crate lazy_static;
 extern crate maud;
@@ -15,6 +16,7 @@ extern crate r2d2_diesel_mysql;
 extern crate dotenv;
 extern crate bcrypt;
 extern crate time;
+extern crate serde_json;
 
 mod route;
 mod data;
@@ -25,5 +27,5 @@ use route::*;
 
 
 fn main() {
-	rocket::ignite().mount("/", routes![index, account_creation, files, login, verify, adduser, member, logout, getuser]).launch();
+	rocket::ignite().mount("/", routes![index, account_creation, files, login, verify, adduser, member, logout, getuser, get_user_cards]).launch();
 }

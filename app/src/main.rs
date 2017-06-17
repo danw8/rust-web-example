@@ -4,6 +4,9 @@
 extern crate maud;
 extern crate libc;
 #[macro_use] extern crate webplatform;
+#[macro_use] extern crate serde_derive;
+extern crate serde;
+extern crate serde_json;
 
 mod wire;
 mod route;

@@ -38,7 +38,11 @@ impl UserService{
 	// }
 
 	pub fn get_user(&self, uname: &str) -> Option<User> {
-		user::table.filter(user::username.eq(uname)).limit(1).load::<User>(self.db.connection()).expect("Error loading user").pop()
+		match user::table.filter(user::username.eq(uname))
+		.limit(1).load::<User>(self.db.connection()){
+			Ok(u) => u,
+			Err(e) => Vec::<User>::new(),
+		}.pop()
 	}
 
 	pub fn create_user<'a>(&self, username: &'a str, email: &'a str, password: &'a str) -> Result<User, String> {
@@ -57,7 +61,7 @@ impl UserService{
 		};
 
 		match diesel::insert(&new_user).into(user::table)
-        		.execute(self.db.connection()) {
+        .execute(self.db.connection()) {
 			Ok(_) => (),
 			Err(e) => {
 				println!("Saving to database failed: {}", e);
