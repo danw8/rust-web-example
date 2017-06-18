@@ -10,7 +10,8 @@ extern crate serde_json;
 
 mod wire;
 mod route;
-mod view;
+// mod view;
+mod component;
 
 
 //use std::sync::{Arc, Mutex};
@@ -36,12 +37,12 @@ fn main(){
             //route(document);
             let l = document.location_hash_get();
             let a = document.element_query("#app").unwrap();
-            route::route(l, a);
+            route::route(l, a, document.clone());
         }
     });
     let location = document.location_hash_get();
     let app = document.element_query("#app").unwrap();
-    route::route(location, app);
+    route::route(location, app, document);
 
     webplatform::spin();
 }

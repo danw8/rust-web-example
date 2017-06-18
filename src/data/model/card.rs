@@ -1,6 +1,6 @@
 use super::super::schema::card;
 
-#[derive(Queryable, Deserialize, Serialize, Clone)]
+#[derive(Queryable, Deserialize, Serialize, Clone, Debug)]
 pub struct Card {
 	pub id: i32,
 	pub user_id: i32,
@@ -21,6 +21,10 @@ impl Card {
             _ => CardStatus::Unknown
         }
     }
+
+    pub fn get_status_int(&self) -> i32{
+        self.status
+    }
 }
 
 #[derive(Insertable)]
@@ -32,6 +36,7 @@ pub struct NewCard<'a> {
     pub status: i32,
 }
 
+#[derive(Debug)]
 pub enum CardStatus{
     Incomplete = 1,
     Complete = 2,

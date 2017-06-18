@@ -74,4 +74,30 @@ impl CardService{
 		println!("Problem with new card creation");
 		Err("Problem with new card creation".to_string())
 	}
+
+	pub fn update_card(&self, update_card: Card) -> Result<Card, String> {
+		match diesel::update(card::table.find(update_card.id))
+			.set((
+				card::status.eq(update_card.clone().get_status_int()), 
+				card::title.eq(update_card.title.clone()), 
+				card::description.eq(update_card.description.clone()) 
+			))
+			.execute(self.db.connection()) {
+				Ok(_) => return Ok(update_card),
+				Err(e) => {
+					println!("Updating card to database failed: {}", e);
+					return Err("Failed to update card.".to_string());
+				}
+			}
+	}
+
+	pub fn user_owns_card(&self, card_id: i32, user_id: i32) -> bool{
+		if let Some(card) = self.get_card(card_id) {
+			if card.user_id == user_id {
+				return true;
+			}
+		}
+		println!("failed to get card");
+		false
+	}
 }

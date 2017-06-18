@@ -1,9 +1,10 @@
-use webplatform::{HtmlNode};
-use maud::{PreEscaped};
+use webplatform::{HtmlNode, Document};
+use std::rc::Rc;
 
-use view::*;
+use component::member_home;
+use component::member_list;
 
-pub fn route(mut location: String, app: HtmlNode){
+pub fn route(mut location: String, app: HtmlNode, document: Rc<Document>){
     if location.ends_with('/'){
         location.pop();
     }
@@ -14,10 +15,8 @@ pub fn route(mut location: String, app: HtmlNode){
         location[2..].split("/").filter(|x| x.len() > 0).map(|x| x.to_string()).collect::<Vec<_>>()
     };
 
-    let PreEscaped(markup) = match &*path[0] {
-        "list" => member_list(),
-        _ => member_home(),
+    match &*path[0] {
+        "list" => member_list::member_list(app, document),
+        _ => member_home::member_home(app),
     };
-    //let PreEscaped(markup) = member(location);
-    app.html_set(&markup);
 }

@@ -27,3 +27,18 @@ pub fn http_get(url: &str) -> String{
         str::from_utf8(CStr::from_ptr(a as *const libc::c_char).to_bytes()).unwrap().to_owned()
     }
 }
+
+pub fn http_post(url: &str, data: &str) -> String {
+    let a = js!{ (url, data) b"\
+            var params = UTF8ToString($1);\
+            var xmlHttp = new XMLHttpRequest();\
+            xmlHttp.open('POST', UTF8ToString($0), false);\
+            xmlHttp.setRequestHeader(\"Content-Type\", \"application/json;charset=UTF-8\");\
+            xmlHttp.send( params );\
+            return allocate(intArrayFromString(xmlHttp.responseText), 'i8', ALLOC_STACK);\
+    \0"};
+    println!("{:?}", a);
+    unsafe {
+        str::from_utf8(CStr::from_ptr(a as *const libc::c_char).to_bytes()).unwrap().to_owned()
+    }
+}
