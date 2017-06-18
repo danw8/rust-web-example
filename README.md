@@ -4,15 +4,15 @@ This is a example web application written in rust. It will try to include common
 ### Work In Progress
 - [X] Server Side Routing
 - [X] Server Side Templating
-- [ ] Server Side State
-- [ ] Client Side Routing
-- [ ] Client Side Templating
+- [X] Server Side State
+- [X] Client Side Routing
+- [X] Client Side Templating
 - [ ] Client Side State
 - [ ] Database Access (CRUD) - partially implemented
-- [ ] JSON Request/Response
+- [X] JSON Request/Response
 - [ ] XML Request/Response
-- [ ] Update DOM
-- [ ] Authentication
+- [X] Update DOM
+- [X] Authentication
 - [ ] Unit Tests
 - [ ] Others
 
