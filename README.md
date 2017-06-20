@@ -8,9 +8,8 @@ This is a example web application written in rust. It will try to include common
 - [X] Client Side Routing
 - [X] Client Side Templating
 - [ ] Client Side State
-- [ ] Database Access (CRUD) - partially implemented
+- [X] Database Access (CRUD)
 - [X] JSON Request/Response
-- [ ] XML Request/Response
 - [X] Update DOM
 - [X] Authentication
 - [ ] Unit Tests

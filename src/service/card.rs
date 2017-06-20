@@ -43,7 +43,7 @@ impl CardService{
         }
     }
 
-	pub fn add_card(&self, user_id: i32, title: &str, description: &str, status: CardStatus) -> Result<Card, String> {
+	pub fn add_card(&self, user_id: i32, title: String, description: String, status: CardStatus) -> Result<Card, String> {
 		let new_card = NewCard {
 			user_id: user_id,
 			title: title,
@@ -99,5 +99,12 @@ impl CardService{
 		}
 		println!("failed to get card");
 		false
+	}
+
+	pub fn delete_card(&self, card_id: i32) -> bool {
+		match diesel::delete(card::table.find(card_id)).execute(self.db.connection()){
+			Ok(_) => true,
+			Err(_) => false,
+		}
 	}
 }

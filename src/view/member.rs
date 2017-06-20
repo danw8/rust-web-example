@@ -4,9 +4,9 @@ use super::partial::*;
 
 pub fn member(user: Option<User>) -> Markup {
 	html! {
-		head{
+		head {
 			link rel="stylesheet" type="text/css" href=("/files/style/member.css") /
-			
+			link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" /
 		}
 		body{
 			(navbar(&user))

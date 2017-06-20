@@ -18,6 +18,10 @@
 	padding: 25px;
 }
 
+.list-cards{
+	padding-left: 0px;
+}
+
 .list-card{
 	list-style: none;
     border: 2px solid;
@@ -46,4 +50,40 @@
 
 .list-card-status select{
 	margin: 10px;
+}
+
+.list-card-delete{
+	float: right;
+	border: none;
+	background-color: transparent;
+	color: var(--green-primary);
+	font-size: larger;
+	cursor: pointer;
+}
+
+.list-delete-tooltip{
+	visibility: hidden;
+    width: 120px;
+    background-color: var(--green-primary);
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+	font-size: medium;
+ 
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+.list-card-delete:hover .list-delete-tooltip{
+	visibility: visible;
+}
+
+.list-add-card, .list-add-card-title, .list-add-card-description, .list-add-card-button, .list-add-new{
+	margin: 10px;
+}
+
+.list-add-card-title label, .list-add-card-description label {
+	margin-right: 10px;
 }

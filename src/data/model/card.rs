@@ -16,8 +16,8 @@ impl Card {
 
     pub fn get_status(&self) -> CardStatus{
         match self.status {
-            1 => CardStatus::Incomplete,
-            2 => CardStatus::Complete,
+            0 => CardStatus::Incomplete,
+            1 => CardStatus::Complete,
             _ => CardStatus::Unknown
         }
     }
@@ -27,18 +27,28 @@ impl Card {
     }
 }
 
-#[derive(Insertable)]
+#[derive(Insertable, Deserialize, Serialize,)]
 #[table_name="card"]
-pub struct NewCard<'a> {
+pub struct NewCard {
     pub user_id: i32,
-    pub title: &'a str,
-    pub description: &'a str,
+    pub title: String,
+    pub description: String,
     pub status: i32,
+}
+
+impl NewCard {
+    pub fn get_status(&self) -> CardStatus{
+        match self.status {
+            0 => CardStatus::Incomplete,
+            1 => CardStatus::Complete,
+            _ => CardStatus::Unknown
+        }
+    }
 }
 
 #[derive(Debug)]
 pub enum CardStatus{
-    Incomplete = 1,
-    Complete = 2,
-    Unknown = 3,
+    Incomplete = 0,
+    Complete = 1,
+    Unknown = 2,
 }

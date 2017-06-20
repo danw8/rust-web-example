@@ -3,7 +3,7 @@ use rocket::response::{Flash, Redirect};
 use rocket_contrib::{JSON, Value};
 use service::user::UserService;
 use service::card::CardService;
-use data::model::card::Card;
+use data::model::card::{Card, NewCard, CardStatus};
 use view;
 
 #[get("/member#")]
@@ -30,6 +30,19 @@ fn get_user_cards(user_service: UserService, card_service: CardService) -> JSON<
 	return JSON(json!(Vec::<Card>::new()));
 }
 
+#[get("/deletecard/<id>")]
+fn deletecard(user_service: UserService, card_service: CardService, id: i32) -> String {
+	if let Some(user) = user_service.user {
+		let can_delete = card_service.user_owns_card(id, user.id);
+		if can_delete {
+			if card_service.delete_card(id) {
+				return "success".to_string();
+			}
+		}
+	}
+	"failure".to_string()
+}
+
 #[post("/updatecard", format = "application/json", data = "<card>")]
 fn updatecard(user_service: UserService, card_service: CardService, card: JSON<Card>) -> String{
 	if let Some(user) = user_service.user {
@@ -44,4 +57,24 @@ fn updatecard(user_service: UserService, card_service: CardService, card: JSON<C
 		}
 	}
 	"failure".to_string()
+}
+
+#[post("/addcard", format = "application/json", data = "<card>")]
+fn addcard(user_service: UserService, card_service: CardService, card: JSON<NewCard>) -> JSON<Value> {
+	if let Some(user) = user_service.user {
+		let status = card.0.get_status();
+		let new_card = match card_service.add_card(user.id, card.0.title, card.0.description, status){
+			Ok(c) => c,
+			Err(e) => {
+				return JSON(json!(Failure { message: "Couldn't add card".to_string()} ))
+			},
+		};
+		return JSON(json!(new_card));
+	}
+	return JSON(json!(Failure { message: "Couldn't add card".to_string()} ))
+}
+
+#[derive(Deserialize, Serialize,)]
+struct Failure {
+	message: String
 }
