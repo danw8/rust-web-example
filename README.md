@@ -1,6 +1,9 @@
 # Rust Web Example
 This is a example web application written in rust. It will try to include common things that you would find in a web application. It is a work in progress and might not have the best way to do things. Here are some of the expected features.
 
+## Warning: Moving work from here to my new repository.
+The new repository is (here)[https://github.com/danw8/web-bones-rs]. Some of the features here are not in the new repository, and this repository has some things that are out of date and may not work. Keep in mind that the goals of each of these repos is slightly different. The of this one was to provide and example, where the goal of the web-bones repository is to provide a base that can be extended to create applications.
+
 ### Work In Progress
 - [X] Server Side Routing
 - [X] Server Side Templating
